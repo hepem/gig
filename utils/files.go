@@ -18,6 +18,15 @@ func CreateDir(path string) error {
 	return nil
 }
 
+func WriteFile(path string, data []byte) error {
+	err := os.WriteFile(path, data, 0644)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func DirExists(path string) bool {
 	info, err := os.Stat(path)
 	return err == nil && info.IsDir()
