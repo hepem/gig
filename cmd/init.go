@@ -5,23 +5,24 @@ import (
 	"os"
 
 	"github.com/hepem/gig/constants"
+	"github.com/hepem/gig/utils"
 	"github.com/spf13/cobra"
 )
 
 func buildObjectDir() {
-	err := os.Mkdir(constants.ObjectDir, 0755)
+	err := utils.CreateDir(constants.ObjectDir)
 	if err != nil {
 		fmt.Println("Error creating object directory:", err)
 		os.Exit(1)
 	}
 
-	err = os.Mkdir(fmt.Sprintf("%s/info", constants.ObjectDir), 0755)
+	err = utils.CreateDir(fmt.Sprintf("%s/info", constants.ObjectDir))
 	if err != nil {
 		fmt.Println("Error creating info directory:", err)
 		os.Exit(1)
 	}
 
-	err = os.Mkdir(fmt.Sprintf("%s/pack", constants.ObjectDir), 0755)
+	err = utils.CreateDir(fmt.Sprintf("%s/pack", constants.ObjectDir))
 	if err != nil {
 		fmt.Println("Error creating pack directory:", err)
 		os.Exit(1)
@@ -29,19 +30,19 @@ func buildObjectDir() {
 }
 
 func buildRefsDir() {
-	err := os.Mkdir(constants.RefsDir, 0755)
+	err := utils.CreateDir(constants.RefsDir)
 	if err != nil {
 		fmt.Println("Error creating refs directory:", err)
 		os.Exit(1)
 	}
 
-	err = os.Mkdir(fmt.Sprintf("%s/heads", constants.RefsDir), 0755)
+	err = utils.CreateDir(fmt.Sprintf("%s/heads", constants.RefsDir))
 	if err != nil {
 		fmt.Println("Error creating heads directory:", err)
 		os.Exit(1)
 	}
 
-	err = os.Mkdir(fmt.Sprintf("%s/tags", constants.RefsDir), 0755)
+	err = utils.CreateDir(fmt.Sprintf("%s/tags", constants.RefsDir))
 	if err != nil {
 		fmt.Println("Error creating tags directory:", err)
 		os.Exit(1)
@@ -49,7 +50,7 @@ func buildRefsDir() {
 }
 
 func initialize() {
-	err := os.Mkdir(constants.GigDir, 0755)
+	err := utils.CreateDir(constants.GigDir)
 
 	if err != nil {
 		fmt.Println("Skipping. Repository already exists.")
