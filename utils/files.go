@@ -5,8 +5,12 @@ import (
 	"compress/zlib"
 	"crypto/sha1"
 	"encoding/hex"
+	"fmt"
 	"log"
 	"os"
+	"time"
+
+	"github.com/hepem/gig/constants"
 )
 
 func CreateDir(path string) error {
@@ -41,6 +45,13 @@ func ReadFile(path string) ([]byte, error) {
 	return data, nil
 }
 
+func GenerateSHA1(name string) string {
+	data := time.Now().Format(time.RFC3339) + name
+	hash := sha1.Sum([]byte(data))
+	return hex.EncodeToString(hash[:])
+
+}
+
 func FileToSHA1(data []byte) string {
 	hash := sha1.Sum(data)
 	return hex.EncodeToString(hash[:])
@@ -56,4 +67,12 @@ func Deflate(data []byte) ([]byte, error) {
 
 	writer.Close()
 	return compressed.Bytes(), nil
+}
+
+func CreateDirFromSha(sha string) {
+	err := CreateDir(fmt.Sprintf("%s/%s", constants.ObjectDir, sha[0:2]))
+	if err != nil {
+		fmt.Println("Error creating object directory:", err)
+		return
+	}
 }
